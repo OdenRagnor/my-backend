@@ -75,7 +75,7 @@ body {
 #gameOverMessage {
     display: none;
     position: relative;
-    bottom: 20px;
+    bottom: 100px;
     left:40%;
     z-index: 10;
     font-size: 30px;
