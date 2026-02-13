@@ -75,7 +75,7 @@ function draw() {
   ctx.fillRect(birdX, birdY, 30, 30);
 
   // Pipes
-  ctx.fillStyle = "green";
+  ctx.fillStyle = "pink";
   pipes.forEach(pipe => {
     // Top pipe
     ctx.fillRect(pipe.x, 0, pipeWidth, pipe.top);
