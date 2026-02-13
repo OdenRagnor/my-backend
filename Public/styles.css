@@ -42,3 +42,24 @@ body {
     font-family: 'Alex Brush', cursive;
     font-size: 50px;
 }
+
+#hearts {
+    position: absolute; 
+    width: 120px; 
+    top: 20px;
+    left: 20px;
+    z-index: -1;
+}
+
+#hearts2 {
+    position: absolute; 
+    width: 120px; 
+    top: 20px;
+    right: 20px;
+    z-index: -1;
+}
+
+.heart {
+    height: 100px;
+    width: auto;
+}
