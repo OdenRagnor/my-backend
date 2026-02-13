@@ -70,3 +70,8 @@ body {
 #gameCanvas {
     text-align: center;
 }
+
+#gameButton {
+  position: relative;
+  z-index: 10;
+}
