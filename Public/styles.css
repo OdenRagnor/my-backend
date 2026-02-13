@@ -68,10 +68,21 @@ body {
 }
 
 #gameCanvas {
-    text-align: center;
+    position: relative;
+    left: 40%;
 }
 
 #gameOverMessage {
-  position: relative;
-  z-index: 10;
+    display: none;
+    position: relative;
+    bottom: 20px;
+    left:40%;
+    z-index: 10;
+    font-size: 30px;
+}
+
+#gameButton {
+    font-size: 20px;
+    border-radius: 25px;
+    border: solid 1px white;
 }

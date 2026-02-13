@@ -107,7 +107,23 @@ function endGame() {
   document.getElementById("gameOverMessage").style.display = "block";
 }
 
-// Restart
+document.getElementById("restartButton").addEventListener("click", restartGame);
+
 function restartGame() {
-  document.location.reload();
+  // Hide the message again
+  document.getElementById("gameOverMessage").style.display = "none";
+
+  // Reset game state
+  birdX = 50;
+  birdY = 300;
+  birdVelocity = 0;
+
+  pipes = [];
+  pipes.push(createPipe());
+
+  gameOver = false;
+
+  // Restart the loop
+  update();
 }
+
