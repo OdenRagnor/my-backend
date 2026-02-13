@@ -13,7 +13,7 @@ let pipes = [];
 let pipeWidth = 60;
 let pipeGap = 150;
 let pipeSpeed = 2;
-
+let score = 0;
 // Game state
 let gameOver = false;
 
@@ -25,7 +25,8 @@ function createPipe() {
   return {
     x: canvas.width,
     top: topHeight,
-    bottom: topHeight + pipeGap
+    bottom: topHeight + pipeGap,
+    passed: false
   };
 }
 
@@ -46,7 +47,16 @@ function update() {
   birdY += birdVelocity;
 
   // Move pipes
-  pipes.forEach(pipe => pipe.x -= pipeSpeed);
+    pipes.forEach(pipe => pipe.x -= pipeSpeed);
+        pipes.forEach(pipe => {
+        pipe.x -= pipeSpeed;
+
+        // Count score when bird passes pipe
+        if (!pipe.passed && pipe.x + pipeWidth < birdX) {
+            pipe.passed = true;
+            score++;
+        }
+    });
 
   // Add new pipes
   if (pipes[pipes.length - 1].x < canvas.width - 200) {
@@ -68,20 +78,25 @@ update();
 
 // Drawing
 function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Bird
-  ctx.fillStyle = "yellow";
-  ctx.fillRect(birdX, birdY, 30, 30);
+    // Bird
+    ctx.fillStyle = "yellow";
+    ctx.fillRect(birdX, birdY, 30, 30);
 
-  // Pipes
-  ctx.fillStyle = "pink";
-  pipes.forEach(pipe => {
+    // Pipes
+    ctx.fillStyle = "pink";
+    pipes.forEach(pipe => {
     // Top pipe
     ctx.fillRect(pipe.x, 0, pipeWidth, pipe.top);
 
     // Bottom pipe
     ctx.fillRect(pipe.x, pipe.bottom, pipeWidth, canvas.height - pipe.bottom);
+
+    ctx.fillStyle = "white";
+    ctx.font = "30px Arial";
+    ctx.fillText("Score: " + score, 10, 40);
+
   });
 }
 
@@ -110,20 +125,22 @@ function endGame() {
 document.getElementById("restartButton").addEventListener("click", restartGame);
 
 function restartGame() {
-  // Hide the message again
-  document.getElementById("gameOverMessage").style.display = "none";
+    // Hide the message again
+    document.getElementById("gameOverMessage").style.display = "none";
 
-  // Reset game state
-  birdX = 50;
-  birdY = 300;
-  birdVelocity = 0;
+    // Reset game state
+    birdX = 50;
+    birdY = 300;
+    birdVelocity = 0;
 
-  pipes = [];
-  pipes.push(createPipe());
+    pipes = [];
+    pipes.push(createPipe());
 
-  gameOver = false;
+    score = 0;
 
-  // Restart the loop
-  update();
+    gameOver = false;
+
+    // Restart the loop
+    update();
 }
 
