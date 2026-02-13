@@ -1,7 +1,7 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Bird properties
+// Bird
 let birdX = 50;
 let birdY = 300;
 let birdVelocity = 0;
@@ -13,6 +13,9 @@ let pipes = [];
 let pipeWidth = 60;
 let pipeGap = 150;
 let pipeSpeed = 2;
+
+// Game state
+let gameOver = false;
 
 // Create first pipe
 pipes.push(createPipe());
@@ -26,10 +29,18 @@ function createPipe() {
   };
 }
 
-document.addEventListener("keydown", () => birdVelocity = jumpStrength);
-document.addEventListener("click", () => birdVelocity = jumpStrength);
+// Input
+document.addEventListener("keydown", () => {
+  if (!gameOver) birdVelocity = jumpStrength;
+});
+document.addEventListener("click", () => {
+  if (!gameOver) birdVelocity = jumpStrength;
+});
 
+// Game loop
 function update() {
+  if (gameOver) return;
+
   // Bird physics
   birdVelocity += gravity;
   birdY += birdVelocity;
@@ -42,13 +53,12 @@ function update() {
     pipes.push(createPipe());
   }
 
-  // Remove off-screen pipes
+  // Remove old pipes
   if (pipes[0].x < -pipeWidth) {
     pipes.shift();
   }
 
   checkCollision();
-  
   draw();
 
   requestAnimationFrame(update);
@@ -56,14 +66,15 @@ function update() {
 
 update();
 
+// Drawing
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Draw bird
+  // Bird
   ctx.fillStyle = "yellow";
   ctx.fillRect(birdX, birdY, 30, 30);
 
-  // Draw pipes
+  // Pipes
   ctx.fillStyle = "green";
   pipes.forEach(pipe => {
     // Top pipe
@@ -74,6 +85,7 @@ function draw() {
   });
 }
 
+// Collision detection
 function checkCollision() {
   for (let pipe of pipes) {
     let hitPipe =
@@ -84,10 +96,18 @@ function checkCollision() {
     let hitGround = birdY + 30 > canvas.height;
 
     if (hitPipe || hitGround) {
-      alert("Game Over!");
-      document.location.reload();
+      endGame();
     }
   }
 }
 
+// End game without freezing the page
+function endGame() {
+  gameOver = true;
+  document.getElementById("gameOverMessage").style.display = "block";
+}
 
+// Restart
+function restartGame() {
+  document.location.reload();
+}
