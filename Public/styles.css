@@ -71,7 +71,7 @@ body {
     text-align: center;
 }
 
-#gameButton {
+#gameOverMessage {
   position: relative;
   z-index: 10;
 }
