@@ -47,7 +47,10 @@ function update() {
     pipes.shift();
   }
 
+  checkCollision();
+  
   draw();
+
   requestAnimationFrame(update);
 }
 
@@ -87,4 +90,4 @@ function checkCollision() {
   }
 }
 
-checkCollision();
+
